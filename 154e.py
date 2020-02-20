@@ -17,7 +17,7 @@ for i in range(1,L+1):#i桁目
         dp0[i][j] = dp0[i-1][j]
     else:
       if c>0:
-        dp1[i][j] = dp0[i-1][j-1]*(c-1)+dp1[i-1][j-1]*9+dp1[i-1][j]+dp0[i-1][j]
+        dp1[i][j] = dp0[i-1][j-1]*(c-1)+dp1[i-1][j-1]*9+dp1[i-1][j]#+dp0[i-1][j]
         dp0[i][j] = dp0[i-1][j-1]
       else:
         dp1[i][j] = dp1[i-1][j-1]*9+dp1[i-1][j]
