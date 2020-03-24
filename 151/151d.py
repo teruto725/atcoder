@@ -1,49 +1,30 @@
 import copy
-import numpy
-def move(maze):
-    is_move = False
-    cp_maze = copy.deepcopy(maze)
-    for i in range(H):
-        for j in range(W):
-            if maze[i][j]=="X":
-                if i > 0 and cp_maze[i-1][j]==".":#上
-                    cp_maze[i-1][j] = "X"
-                    is_move = True
-                    print("上")
-                if i < len(cp_maze)-1 and cp_maze[i+1][j]==".":#下
-                    cp_maze[i+1][j] = "X"
-                    is_move = True
-                    print("下")
-                if j > 0 and cp_maze[i][j-1]==".":#左
-                    cp_maze[i][j-1] = "X"
-                    is_move = True
-                    print("左")
-                if j < len(cp_maze)-1 and cp_maze[i][j+1]=="." :#右
-                    cp_maze[i][j+1] = "X"
-                    is_move = True
-                    print("右")
-    maze = cp_maze
-    print(numpy.array(maze))
-    return is_move
-
-
+import sys
+input = sys.stdin.readline
 H,W= map(int,input().split())
-input_maze = [list(input()) for _ in range(H)]
+maze = [list(input()) for _ in range(H)]
+maze = [l[:len(maze[0])-1] for l in maze]
 ans = 0
 for i in range(H):
     for j in range(W):
-        print("i: "+str(i))
-        print("j: "+str(j))
-        if input_maze[i][j] ==".":
-            dis = 0
-            maze = copy.deepcopy(input_maze)
-            maze[i][j]="X"
+        if maze[i][j] !="#":
+            queue = [[i,j,0]]#最初の△
+            tem_ans = 0
             while True:
-                is_move = move(maze)
-                if is_move:
-                    dis += 1
-                else:
-                    ans = max(dis,ans)
+                if len(queue) ==0:
+                    tem_ans = point[2]
                     break
-        print("dis: "+str(dis))
+                point=queue.pop(0)#queueの先頭座標+何回移動したかの取得
+                maze[point[0]][point[1]] = str(point[2]) 
+                #print(np.array(maze))
+                if point[0] > 0 and maze[point[0]-1][point[1]]!="#" and maze[point[0]-1][point[1]]!=str(point[2]-1):#上
+                    queue.append([point[0]-1,point[1],point[2]+1])
+                if point[0] < len(maze)-1 and maze[point[0]+1][point[1]]!="#" and maze[point[0]+1][point[1]]!=str(point[2]-1):#下
+                    queue.append([point[0]+1,point[1],point[2]+1])
+                if point[1] > 0 and maze[point[0]][point[1]-1]!="#" and maze[point[0]][point[1]-1]!=str(point[2]-1):#左
+                    queue.append([point[0],point[1]-1,point[2]+1])
+                if point[1] < len(maze[point[0]])-1 and maze[point[0]][point[1]+1]!="#" and maze[point[0]][point[1]+1]!=str(point[2]-1):#右
+                    queue.append([point[0],point[1]+1,point[2]+1])
+                
+            ans = max(ans,tem_ans)
 print(ans)
