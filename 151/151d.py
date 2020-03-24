@@ -5,25 +5,23 @@ def move(maze):
     cp_maze = copy.deepcopy(maze)
     for i in range(H):
         for j in range(W):
-            if maze[i][j]=="X":
+            if cp_maze[i][j]=="X":
                 if i > 0 and cp_maze[i-1][j]==".":#上
-                    cp_maze[i-1][j] = "X"
+                    maze[i-1][j] = "X"
                     is_move = True
-                    print("上")
+                    #print("上")
                 if i < len(cp_maze)-1 and cp_maze[i+1][j]==".":#下
-                    cp_maze[i+1][j] = "X"
+                    maze[i+1][j] = "X"
                     is_move = True
-                    print("下")
+                    #print("下")
                 if j > 0 and cp_maze[i][j-1]==".":#左
-                    cp_maze[i][j-1] = "X"
+                    maze[i][j-1] = "X"
                     is_move = True
-                    print("左")
+                   # print("左")
                 if j < len(cp_maze)-1 and cp_maze[i][j+1]=="." :#右
-                    cp_maze[i][j+1] = "X"
+                    maze[i][j+1] = "X"
                     is_move = True
-                    print("右")
-    maze = cp_maze
-    print(numpy.array(maze))
+                    #print("右")
     return is_move
 
 
@@ -32,8 +30,6 @@ input_maze = [list(input()) for _ in range(H)]
 ans = 0
 for i in range(H):
     for j in range(W):
-        print("i: "+str(i))
-        print("j: "+str(j))
         if input_maze[i][j] ==".":
             dis = 0
             maze = copy.deepcopy(input_maze)
@@ -45,5 +41,4 @@ for i in range(H):
                 else:
                     ans = max(dis,ans)
                     break
-        print("dis: "+str(dis))
 print(ans)
