@@ -5,20 +5,19 @@ def pat(K,count,keta,num):
     elif keta == 1:
         if count == K-1:
             print(num)
-            return count + 1
+            return -1
         else:
             return (count+1)
-
     else:
         if (int(num[-1])) -1 >= 0:
             count = pat(K,count,keta-1,num+str(int(num[-1])-1))
         count = pat(K,count,keta-1,num+num[-1])
         if (int(num[-1])+1) <= 9:
             count = pat(K,count,keta-1,num+str(int(num[-1])+1))
-    if count >=K:
-        return -1
-    else:
-        return count
+            
+    return count
+
+
 K = int(input())
 count = 0
 ans = list()
